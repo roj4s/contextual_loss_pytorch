@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from .vgg import VGG19
+#from .vgg import VGG19
 from .. import functional as F
 from ..config import LOSS_TYPES
 
@@ -36,6 +36,7 @@ class ContextualLoss(nn.Module):
 
         self.band_width = band_width
 
+        '''
         if use_vgg:
             self.vgg_model = VGG19()
             self.vgg_layer = vgg_layer
@@ -49,9 +50,12 @@ class ContextualLoss(nn.Module):
                 tensor=torch.tensor(
                     [[[0.229]], [[0.224]], [[0.225]]], requires_grad=False)
             )
+        '''
 
     def forward(self, x, y):
+        '''
         if hasattr(self, 'vgg_model'):
+            print("IT HAS VGG MODEL")
             assert x.shape[1] == 3 and y.shape[1] == 3,\
                 'VGG model takes 3 chennel images.'
 
@@ -62,5 +66,6 @@ class ContextualLoss(nn.Module):
             # picking up vgg feature maps
             x = getattr(self.vgg_model(x), self.vgg_layer)
             y = getattr(self.vgg_model(y), self.vgg_layer)
+        '''
 
         return F.contextual_loss(x, y, self.band_width)

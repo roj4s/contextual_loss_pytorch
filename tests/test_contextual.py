@@ -3,7 +3,7 @@ import torch
 from contextual_loss import functional as F
 from contextual_loss import ContextualLoss
 
-test_shape = [1, 256, 48, 48]
+test_shape = [1, 256, 380, 380]
 
 
 def test_module():

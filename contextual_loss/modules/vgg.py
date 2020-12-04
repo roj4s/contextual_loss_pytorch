@@ -23,9 +23,27 @@ class VGG19(nn.Module):
             self.slice4.add_module(str(x), vgg_pretrained_features[x])
         for x in range(27, 36):
             self.slice5.add_module(str(x), vgg_pretrained_features[x])
+
         if not requires_grad:
             for param in self.parameters():
                 param.requires_grad = False
+
+            for param in self.slice1.parameters():
+                param.requires_grad = False
+
+            for param in self.slice2.parameters():
+                param.requires_grad = False
+
+            for param in self.slice3.parameters():
+                param.requires_grad = False
+
+            for param in self.slice4.parameters():
+                param.requires_grad = False
+
+            for param in self.slice5.parameters():
+                param.requires_grad = False
+
+
 
     def forward(self, X):
         h = self.slice1(X)
